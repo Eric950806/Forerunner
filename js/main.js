@@ -5,23 +5,30 @@ var studentsCollection = db.collection("students");
 
 
 $(document).ready(function(){
-	upDate(studentsCollection.find());
+	studentsCollection.load(callback);
+	// upDate(studentsCollection.find());
 	$("#table-tbody").on("click", ".dataID", colIDClick);
 	$("#table-tbody").on("click", ".btn-danger", btnDeleteClick);
+	$("#table-tbody").on("click", ".btn-warning", btnEditClick);
+	$("#c").on("click", insertData);
+	$("#btnSave").on("click", saveUpdateData);
+	$("#btnLimitSearch").on("click", limitSearch);
 })
 
 
-studentsCollection.insert({
-    name: "Koding",
-    age: 18
-});
-
-
-console.log(studentsCollection.find());
-
-
-
-studentsCollection.load(callback);
+function insertData(){
+	var name = $("#a").val();
+	var age = $("#b").val();
+	if (name != "undefined" || age != "undefined") {
+		studentsCollection.insert({
+			name: name,
+			age: age
+		});
+		studentsCollection.save(datasave);
+	$("#a").val("");
+	$("#b").val("");
+	}
+}
 
 
 function btnDeleteClick(){
@@ -31,7 +38,7 @@ function btnDeleteClick(){
 	studentsCollection.remove({
     _id: ID
 	});
-	studentsCollection.save();
+	studentsCollection.save(datasave);
 }
 
 
@@ -46,9 +53,7 @@ function callback(){
 	// createData();
 	upDate(studentsCollection.find());
 }
-function i(){
-	console.log("dataSave");
-}
+
 
 
  function createData(){
@@ -97,4 +102,45 @@ function colIDClick(){
 		"<p>age: " + studentData[0].age + "</p>"
 		);
 	$("#mymodal").modal("show");
+}
+
+function btnEditClick(){
+	var ID = $(this).closest("tr").find(".dataID").text();
+	var query = {
+	    _id: ID
+	};
+	var studentData = studentsCollection.find(query);
+	$("#modalName").val(studentData[0].name);
+	$("#modalAge").val(studentData[0].age);
+	$("#editmodal").attr("studentID", ID);
+	$("#editmodal").modal("show");
+}
+
+
+
+
+function saveUpdateData(){
+	var	ID = $("#editmodal").attr("studentID");
+	var name = $("#modalName").val();
+	var age = $("#modalAge").val();
+	var newData = {
+    name: name,
+    age: age
+};
+	studentsCollection.updateById(ID,newData);
+	$("#editmodal").modal("hide");
+	studentsCollection.save(datasave);
+}
+
+
+function limitSearch(){
+	var GT = $("#edtGT").val();
+	var LT = $("#edtLT").val();
+	var datas = studentsCollection.find({
+    age: {
+        "$gt": GT,
+        "$lt": LT
+    }
+    upDate(datas);
+});
 }

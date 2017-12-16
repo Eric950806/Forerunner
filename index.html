@@ -10,6 +10,9 @@
 	<link rel="shortcut icon" href="https://pokemon.gameinfo.io/images/pokemon/245.png" type="image/x-icon" />
 </head>
 <body>
+		<h6>年齡: 大於</h6><input id="edtGT" type="text" /><h6>小於</h6><input id="edtLT" type="text" /><button id="btnLimitSearch">搜尋</button>
+		<h6>名字:</h6><input id="a" type="text" /><h6>年齡:</h6><input id="b" type="text" />
+		<button id="c">加入</button>
 	<table class="table table-hover">
         <thead>
             <tr>
@@ -34,6 +37,24 @@
 		        
 		      </div>
 		      <div class="modal-footer">
+		        <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		      </div>
+		    </div><!-- /.modal-content -->
+		  </div><!-- /.modal-dialog -->
+		</div><!-- /.modal -->
+		<div class="modal fade" tabindex="-1" role="dialog" id="editmodal" studentID="">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"></span></button>
+		        <h4 class="modal-title">修改學生資料</h4>
+		      </div>
+		      <div class="modal-body">
+		        <p>姓名:</p><input id="modalName" type="text">
+		        <p>年齡:</p><input id="modalAge" type="text">
+		      </div>
+		      <div class="modal-footer">
+		        <botton type="botton" class="btn btn-primery" id="btnSave">Save Chenge</botton>
 		        <button  type="button" class="btn btn-default" data-dismiss="modal">Close</button>
 		      </div>
 		    </div><!-- /.modal-content -->
